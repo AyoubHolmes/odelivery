@@ -10,7 +10,7 @@ export default function Deposits(props) {
     <React.Fragment>
       <Title>{props.title}</Title>
       <Typography component="p" variant="h5">
-        MAD3,024.00
+        MAD{props.value}
       </Typography>
       <Typography color="textSecondary" style={{flex: 1}}>
         by %

@@ -31,7 +31,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Gestion de colis" />
     </ListItem>
-    <ListItem button component={Link} to="/client/bills">
+    <ListItem button component={Link} to="/client/invoices">
       <ListItemIcon>
         <MonetizationOnIcon/>
       </ListItemIcon>

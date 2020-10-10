@@ -1,58 +1,15 @@
 import React, {useState, useEffect, useContext} from 'react';
 import clientContext from '../../../context/client-context';
-import { PDFViewer, Page, Text, View, Document } from '@react-pdf/renderer';
-import styled from '@react-pdf/styled-components';
-
-
-const Heading = styled.Text`
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right:10px
-  padding: 10px;  
-  border: 1px solid black;
-  width: 50%;
-  display: block;
-  background-color: blue;
-`;
-
-const SubHeading = styled.Text`
-    margin-left: 10px;
-    margin-right:10px
-    padding: 10px;  
-    border: 1px solid black;
-    width: 50%;
-    display: block;
-    font-size: 10px;
-`;
-
-const FinalSubHeading = styled.Text`
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right:10px
-    padding: 10px;  
-    border: 1px solid black;
-    width: 50%;
-    display: block;
-    font-size: 8px;
-`;
-
-const Title = styled.Text `
-    font-size: 20px;
-    font-weight: 900;
-    color: white;
-    margin: 5px;
-    padding: 5px;
-    font-family: 'Helvetica';
-    text-align: center;
-`;
+import SingleTicket from './SingleTicket';
 
 const TicketPDF = (props) => {
 
+    // eslint-disable-next-line no-unused-vars
     const [shipments, setShipments] = useState([]);
     const ClientContext = useContext(clientContext);
     useEffect(()=>{
         const ships = []
-        console.log(ClientContext.data.data);
+        console.log(props);
         ClientContext.data.shipments.forEach((shipment) => {
             if(props.shipments.includes(shipment.id)){
                 ships.push(shipment)
@@ -63,9 +20,27 @@ const TicketPDF = (props) => {
     }, [])
 
     return (
-        <PDFViewer style={{width: '100%', height: '500px'}}>
+        <>
+            {shipments.map((shipment, index) => <SingleTicket key={index} {...shipment}/>)}
+        </>
+    );
+};
+
+/*
+<PDFViewer style={{ width: '100%', height: '100%' }}>
+        <Document>
+          <Page>
+            <Text>TEST</Text>
+          </Page>
+        </Document>
+      </PDFViewer>
+
+<PDFViewer style={{width: '100%', height: '500px'}}>
             <Document style={{width: '100%', padding: 20}}>
                 <Page size="A4" style={{ backgroundColor: 'white' }}>
+                    <Heading>
+                        <Title>Odelivery</Title>
+                    </Heading>
                     {shipments ? Object.values(shipments).map((shipment, index)=> {
                         return (
                             <>
@@ -96,8 +71,8 @@ const TicketPDF = (props) => {
                 </Page>
             </Document>
         </PDFViewer>
-    );
-};
+*/
+
 /*
  <Heading>
                         <Title>Odelivery</Title>

@@ -7,6 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from '../ClientBoard/Title';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import { withRouter } from 'react-router-dom';
 import firebase from '../../firebase';
 import ClientContext from '../../context/client-context';
@@ -79,6 +80,15 @@ const Tables = (props) => {
                                         onClick={() => deleteShipmentHandler(row)}
                                         className="btn text-danger">
                                         <DeleteIcon />
+                                    </button>
+                                </TableCell>
+                             ) : null
+                         }
+                         {
+                             props.ticketRowActions ? (
+                                <TableCell>
+                                    <button onClick={()=>props.openTicketHandler(row.uuid)} className="btn text-danger">
+                                        <PictureAsPdfIcon />
                                     </button>
                                 </TableCell>
                              ) : null

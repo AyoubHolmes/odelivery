@@ -8,6 +8,7 @@ const Main = (props) => {
 
     
     useEffect(() => {
+      document.title = 'redirect...';
       if (firebase.getCurrentUsername()) {
         console.log("TEST1");        
         firebase.getCurrentUserData().then(res => {

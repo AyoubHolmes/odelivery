@@ -17,15 +17,17 @@
 .TicketMain {
     display: flex;
     flex-flow: wrap row;
-    width: 100%;
+    width: 90%;
+    text-align: center;
+    margin-left: 50px;
   }
 
 .ticket {
     padding: 10px;
     margin: 10px;
     border: 1px solid black;
-    width: 250px;
-    height: 250px;
+    width: 240px;
+    height: 400px;
 }
 
 .ticket-head {
@@ -44,6 +46,13 @@
 .ticket-element {
     margin: 5px;
     padding: 5px;
+}
+
+.ticket-footer {
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    font-size: smaller;
 }
 
 .test {

@@ -23,9 +23,15 @@ const ProductsAll = asyncComponent(() => {
 
 const ShipmentsAll = asyncComponent(() => {
     return import('./Shipments/All');
-})  
+});
 
+const Invoices = asyncComponent(() => {
+    return import('./Bills/Bills');
+})
 
+const Tickets = asyncComponent(() => {
+    return import('./tickets/MainTickets');
+});
 
 const Copyright = () => {
     return (
@@ -97,6 +103,8 @@ const Client = (props) => {
                                 <Route path={props.match.url + '/dashboard'} exact component={Dashboard} />
                                 <Route path={props.match.url + '/products'} exact component={ProductsAll} />
                                 <Route path={props.match.url + '/shipments'} exact component={ShipmentsAll} />
+                                <Route path={props.match.url + '/invoices'} exact component={Invoices} />
+                                <Route path={props.match.url + '/tickets'} exact component={Tickets} />
                                 <Redirect from={props.match.url+ '/'} exact to={props.match.url + '/dashboard'} />
                             </Switch>
                         </Grid>

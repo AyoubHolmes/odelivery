@@ -31,6 +31,7 @@ class App extends Component{
     firebaseInitialized: false  
   }
   componentDidMount(){
+    document.title = 'Odelivery';
     firebase.isInitialized().then(val => {
 			this.setState({firebaseInitialized: val})
 		})

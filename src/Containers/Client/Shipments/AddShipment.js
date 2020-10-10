@@ -42,7 +42,7 @@ const AddShipment = (props) => {
           clientContext.fetchData();
           if (value.status === "Prés")
           {
-              const ticketsWaitingForPickup = clientContext.data.tickets.find(ticket => ticket.status === "Prés")
+              const ticketsWaitingForPickup = clientContext.data.tickets.find(ticket => ticket.status === "Prés" && ticket.shipments.length <= 9)
               console.log(ticketsWaitingForPickup);
               if (ticketsWaitingForPickup)
               {
@@ -101,7 +101,7 @@ const AddShipment = (props) => {
                 <option aria-label="None" value="" /> 
                 <option value={'newProd'}>Un nouveau produit</option>
                 {
-                  clientContext.data.products.map(prod => <option value={prod.id}>{prod.title}</option>)
+                  clientContext.data.products.map((prod, index) => <option key={index} value={prod.id}>{prod.title}</option>)
                 }
               </Select>
             </FormControl>
@@ -169,7 +169,7 @@ const AddShipment = (props) => {
               >
                 <option aria-label="None" value="" />
                 {
-                  cities.map(city => <option value={city}>{city}</option>)
+                  cities.map((city, index) => <option key={index} value={city}>{city}</option>)
                 }
               </Select>
           </FormControl>

@@ -70,8 +70,8 @@ export default function CustomizedSelects(props) {
           input={<BootstrapInput />}
         >
           <option aria-label="None" value="">Tous</option>
-          {props.conditions.map(cond => {
-            return (<option value={cond.value}>{cond.label}</option>);
+          {props.conditions.map((cond, index) => {
+            return (<option key={index} value={cond.value}>{cond.label}</option>);
           })}
         </NativeSelect>
       </FormControl>

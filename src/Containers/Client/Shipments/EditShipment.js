@@ -93,7 +93,7 @@ const EditShipment = (props) => {
                 <option aria-label="None" value="" />
                 <option value={'newProd'}>Un nouveau produit</option>
                 {
-                  clientContext.data.products.map(prod => <option value={prod.id}>{prod.title}</option>)
+                  clientContext.data.products.map((prod, index) => <option key={index} value={prod.id}>{prod.title}</option>)
                 }
               </Select>
             </FormControl>
@@ -164,7 +164,7 @@ const EditShipment = (props) => {
               >
                 <option aria-label="None" value="" />
                 {
-                  cities.map(city => <option value={city}>{city}</option>)
+                  cities.map((city, index) => <option key={index} value={city}>{city}</option>)
                 }
               </Select>
           </FormControl>

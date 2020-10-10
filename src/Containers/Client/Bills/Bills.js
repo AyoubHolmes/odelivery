@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import Tables from '../../../Components/Tables/Tables';
 import Typography from '@material-ui/core/Typography';
 import InputTest from '../../../Components/Inputs/BootstrapInput'
-import TicketPopUp from './TicketPopUp';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -28,38 +27,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const createData = (uuid, status) => {
-    return { uuid, status};
+const createData = (uuid, status, nbColis, amount, dateCreation, datePayment) => {
+    return { uuid, status, nbColis, amount, dateCreation, datePayment };
   }
 
 
-const Tickets = (props) => {
+const Bills = (props) => {
 
     const clientContext = useContext(ClientContext);
 
-    const dataHeader = ['UUID', 'Statut'];
+    const dataHeader = ['UUID', 'Statut', 'Nb.colis', 'Montant', 'Date de Creation', 'Date de Verment'];
     const [dataValues, setDataValues] = useState([]);
     const [filterBy, setFilterBy] = useState("");
     const [filterVar, setFilterVar] = useState("");
-    const [openTicket, setOpenTicket] = useState(false);
-    const [ticket, setTicket] = useState({});
 
     const conditions = [
         {value: 'uuid', label: 'UUID'},
         {value: 'status', label: 'Statut'},
+        {value: 'Nb.colis', label: 'Nb.colis'},
+        {value: 'amount', label: 'Montant'},
+        {value: 'dateCreation', label: 'Date de Creation'},
+        {value: 'datePayment', label: 'Date de Verment'},
     ]
 
-
-    const handleCloseTicket = () => {
-        setOpenTicket(false);
-    }
-
-    const openTicketHandler = (uuid) => {
-        const tmp  = clientContext.data.tickets.find(t => t.uuid === uuid);
-        console.log(tmp);
-        setTicket(tmp);
-        setOpenTicket(true);
-    }
+    
 
     const filterByHandler = (filter) => {
         setFilterBy(filter.target.value);
@@ -69,18 +60,19 @@ const Tickets = (props) => {
     }
 
     const filterButtonHandler = () => {
-        console.log(clientContext.data.tickets);
-        if (filterBy !== "") {
+        console.log(clientContext.data.products);
+        if (filterBy !== "" && filterBy !== "left")
+        {
             const rgx =new RegExp(filterVar);
-            const tmp = clientContext.data.tickets ? clientContext.data.tickets.filter((ticket) => ("" + ticket[filterBy]).match(rgx)).map((ticket) => {  
-                const test = createData(ticket.uuid, ticket.status);
+            const tmp = clientContext.data.bills ? clientContext.data.bills.filter((bill) => ("" + bill[filterBy]).match(rgx)).map((bill) => {  
+                const test = createData(bill.uuid, bill.status, bill['Nb.colis'], bill.amount, bill.dateCreation, bill.datePayment);
                 return test
             }) : [];
             setDataValues(tmp);
         }
         else {
-            const tmp = clientContext.data.tickets ? clientContext.data.tickets.map((ticket) => {  
-                const test = createData(ticket.uuid, ticket.status);
+            const tmp = clientContext.data.bills ? clientContext.data.bills.map((bill) => {  
+                const test = createData(bill.uuid, bill.status, bill['Nb.colis'], bill.amount, bill.dateCreation, bill.datePayment);
                 return test
             }) : [];
             setDataValues(tmp);
@@ -88,10 +80,10 @@ const Tickets = (props) => {
     }
 
     useEffect(() => {
-        document.title= "Tickets | Odelivery";
+        document.title= "Factures | Odelivery";
         filterButtonHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [clientContext.data.tickets]);
+    }, [clientContext.data.products]);
 
     const classes = useStyles();
     return (
@@ -99,7 +91,7 @@ const Tickets = (props) => {
             <Grid item xs={12}>
                 <div style={{float: 'left'}}>
                     <Typography component="h1" variant="h4" color="primary" gutterBottom>
-                        Tickets
+                        Factures
                     </Typography>
                     
                 </div>
@@ -117,12 +109,11 @@ const Tickets = (props) => {
             </Grid>
             <Grid item xs={12}>
                     <Paper className={classes.paper}>
-                        <Tables header={dataHeader} rows={dataValues} actions={true} ticketRowActions={true} openTicketHandler={openTicketHandler}/>
+                        <Tables header={dataHeader} rows={dataValues} />
                     </Paper>
             </Grid>
-            <TicketPopUp handleCloseTicket={handleCloseTicket} openTicket={openTicket} ticket={ticket}/>
         </>
     );
 };
 
-export default  withRouter(Tickets);
+export default  withRouter(Bills);

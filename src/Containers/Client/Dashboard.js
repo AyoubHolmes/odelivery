@@ -50,7 +50,7 @@ const Dashboard = () => {
   const [statusStatistics, setStatusStatistics] = useState([])
 
   const revenueHandler = (data) => {
-      const shippedStatus = data.shipments.filter(colis => colis.status ==='Billed' || colis.status ==='Delivered');
+      const shippedStatus = data.bills.filter(colis => colis.status ==='Facturé' || colis.status ==='Livré');
       let r = 0;
       for(let i = 0; i < shippedStatus.length; i++){
           r += shippedStatus[i].price;
@@ -59,12 +59,12 @@ const Dashboard = () => {
   };
 
   const shippedHandler = (data) => {
-      const shippedStatus = data.filter(colis => colis.status ==='Billed' || colis.status ==='Delivered');
+      const shippedStatus = data.filter(colis => colis.status ==='Facturé' || colis.status ==='Livré');
       return shippedStatus.length;
   };
 
   const inProgressHandler = (data) => {   
-      const inProgressStatus = data.filter(colis => colis.status ==='In Progress');
+      const inProgressStatus = data.filter(colis => colis.status ==='En cours');
       return inProgressStatus.length
   }
 
@@ -83,8 +83,8 @@ const Dashboard = () => {
 
   const dataProdcutSalesHandler = (data) => {
       const productsSales = data.products.map((product, index) => {
-          const shipmentsByProduct = data.shipments.filter(shipment => (shipment.status ==='Billed' 
-              || shipment.status ==='Delivered') && shipment.productID === index);
+          const shipmentsByProduct = data.shipments.filter(shipment => (shipment.status ==='Facturé' 
+              || shipment.status ==='Livré') && shipment.productID === index);
               let r = 0;
               for(let i = 0; i < shipmentsByProduct.length; i++){
                   r += shipmentsByProduct[i].price;
@@ -106,22 +106,20 @@ const Dashboard = () => {
   }
 
   const statusStatisticsHandler = (data) => {
-     const statisticsPreparing = data.shipments.reduce((a, v)=> (v.status === "Preparing" ? a + 1 : a), 0);
-     const statisticsWaiting = data.shipments.reduce((a, v)=> (v.status === "Waiting For Pickup" ? a + 1 : a), 0);
-     const statisticsIn = data.shipments.reduce((a, v)=> (v.status === "In Progress" ? a + 1 : a), 0);
-     const statisticsDelivered = data.shipments.reduce((a, v)=> (v.status === "Delivered" ? a + 1 : a), 0);        
-     const statisticsBilled = data.shipments.reduce((a, v)=> (v.status === "Billed" ? a + 1 : a), 0);
-     const statisticsCanceled = data.shipments.reduce((a, v)=> (v.status === "Canceled" ? a + 1 : a), 0);
-     const statisticsNo= data.shipments.reduce((a, v)=> (v.status === "No Answer" ? a + 1 : a), 0);
+     const statisticsPreparing = data.shipments.reduce((a, v)=> (v.status === "Prés" ? a + 1 : a), 0);
+     const statisticsIn = data.shipments.reduce((a, v)=> (v.status === "En cours" ? a + 1 : a), 0);
+     const statisticsDelivered = data.shipments.reduce((a, v)=> (v.status === "Livré" ? a + 1 : a), 0);        
+     const statisticsBilled = data.shipments.reduce((a, v)=> (v.status === "Facturé" ? a + 1 : a), 0);
+     const statisticsCanceled = data.shipments.reduce((a, v)=> (v.status === "Annulé" ? a + 1 : a), 0);
+     const statisticsNo= data.shipments.reduce((a, v)=> (v.status === "Pas de réponse" ? a + 1 : a), 0);
      const totalLength = data.shipments.length;
      let tmp = [
-      {x: "Preparing", y: statisticsPreparing / totalLength * 100},
-      {x: "Waiting For Pickup", y: statisticsWaiting / totalLength * 100},
-      {x: "In Progress", y: statisticsIn / totalLength * 100},
-      {x: "Delivered", y: statisticsDelivered / totalLength * 100},
-      {x: "Billed", y: statisticsBilled / totalLength * 100},
-      {x: "Canceled", y: statisticsCanceled / totalLength * 100},
-      {x: "No Answer", y: statisticsNo / totalLength * 100}
+      {x: "Prés", y: statisticsPreparing / totalLength * 100},
+      {x: "En cours", y: statisticsIn / totalLength * 100},
+      {x: "Livré", y: statisticsDelivered / totalLength * 100},
+      {x: "Facturé", y: statisticsBilled / totalLength * 100},
+      {x: "Annulé", y: statisticsCanceled / totalLength * 100},
+      {x: "Pas de réponse", y: statisticsNo / totalLength * 100}
      ];
      tmp = tmp.filter(t => t.y !== 0);
      return tmp;
@@ -159,19 +157,24 @@ const Dashboard = () => {
     const fixedHeightDeposits = clsx(classes.paper, classes.fixedHeight2);
     return clientContext.data ? (
         <>
-          <Grid item xs={12} md={3} lg={4}>
-              <Paper className={fixedHeightDeposits}>
-                  <Deposits title="Total chiffre d'affaires" value={0} />
-              </Paper>
-          </Grid>
-            <Grid item xs={12} md={3} lg={4}>
-              <Paper className={fixedHeightDeposits}>
-                  <Deposits title="Colis livrés facturés" value={0} />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={3} lg={4}>
+          <Grid item xs={12} md={4} lg={3}>
                 <Paper className={fixedHeightDeposits}>
-                    <Deposits title="Colis livrés non facturés" value={0} />
+                    <Deposits title="Total" value={0} />
+                </Paper>
+            </Grid>
+            <Grid item xs={12} md={4} lg={3}>
+                <Paper className={fixedHeightDeposits}>
+                    <Deposits title="En cours" value={0} />
+                </Paper>
+            </Grid>
+            <Grid item xs={12} md={4} lg={3}>
+                <Paper className={fixedHeightDeposits}>
+                    <Deposits title="Livrés" value={0} />
+                </Paper>
+            </Grid>
+            <Grid item xs={12} md={4} lg={3}>
+                <Paper className={fixedHeightDeposits}>
+                    <Deposits title="Echouiés" value={0} />
                 </Paper>
             </Grid>
             <Grid item xs={12} md={4} lg={3}>
@@ -194,12 +197,12 @@ const Dashboard = () => {
                     <Deposits title="Echouiés" value={0} />
                 </Paper>
             </Grid>
-            <Grid item xs={12} md={2} lg={6}>
+            <Grid item xs={12} sm={6}>
                 <Paper className={fixedHeightPaper}>
                     <PiChart />
                 </Paper>
             </Grid>
-            <Grid item xs={12} md={2} lg={6}>
+            <Grid item xs={12} sm={6}>
                 <Paper className={fixedHeightPaper}>
                     <PiChart />
                 </Paper>
