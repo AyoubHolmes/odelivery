@@ -19,6 +19,7 @@ const Main = (props) => {
           if (res.data.admin)
             props.history.replace('/admin')
           }).catch(err => {
+            console.log(err);
             firebase.logout();
             props.history.replace('/login')   
           }); 
