@@ -1,0 +1,1 @@
+{"version":3,"sources":["Main.css"],"names":[],"mappings":"AAAA,SACC,cAAe,CACf,KAAM,CACN,MAAO,CACP,UAAW,CACX,WAAY,CACZ,YAAa,CACb,sBAAuB,CACvB,kBACD","file":"18.316ea534.chunk.css","sourcesContent":["#loader2 {\n\tposition: fixed;\n\ttop: 0;\n\tleft: 0;\n\twidth: 100%;\n\theight: 100%;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}"]}

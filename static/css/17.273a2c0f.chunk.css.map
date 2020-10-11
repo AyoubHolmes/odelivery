@@ -1,0 +1,1 @@
+{"version":3,"sources":["Logo.css"],"names":[],"mappings":"AAAA,MACI,WAAY,CACZ,YAAa,CACb,iBACJ,CACA,YACI,aAAc,CACd,mBACJ","file":"17.273a2c0f.chunk.css","sourcesContent":[".logo {\n    margin: auto;\n    padding: 10px;\n    text-align: center;\n}\n.image-logo {\n    height: 30vmin;\n    pointer-events: none;\n}"]}
